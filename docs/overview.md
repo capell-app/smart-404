@@ -39,19 +39,65 @@ Screenshot contract: `screenshots.json`.
 
 ## Technical Shape
 
-- Service providers: `Capell\Smart404\Providers\Smart404ServiceProvider`, `Capell\Smart404\Providers\AdminServiceProvider`.
-- Config files: `packages/smart-404/config/capell-smart-404.php`.
-- Settings migrations: `packages/smart-404/database/settings/2026_08_08_000001_create_smart_404_settings.php`.
-- Settings classes: `Smart404Settings`.
-- Filament classes: `Smart404SettingsSchema`.
-- Route files: `packages/smart-404/routes/web.php`.
-- Actions: `InstallSmart404PackageAction`, `ResolveSmart404SuggestionsAction`.
-- Data objects: `Smart404PublicUrlEntryData`, `Smart404SuggestionData`.
-- Manifest action API: `install: Capell\Smart404\Actions\InstallSmart404PackageAction`, `resolveSuggestions: Capell\Smart404\Actions\ResolveSmart404SuggestionsAction`.
-- Manifest contributions: `frontend-component: Capell\Smart404\Manifest\Smart404WidgetContribution`, `health-check: Capell\Smart404\Manifest\Smart404HealthContribution`, `route: Capell\Smart404\Manifest\Smart404FrontendRoutesContribution`, `setting: Capell\Smart404\Manifest\Smart404SettingsContribution`.
-- Health checks: `Capell\Smart404\Health\Smart404HealthCheck`.
-- Blade views: `packages/smart-404/resources/views/widget.blade.php`.
-- Cache tags: `smart-404`.
+### Service providers
+
+- `Capell\Smart404\Providers\Smart404ServiceProvider`
+- `Capell\Smart404\Providers\AdminServiceProvider`
+
+### Config files
+
+- `packages/smart-404/config/capell-smart-404.php`
+
+### Settings migrations
+
+- `packages/smart-404/database/settings/2026_08_08_000001_create_smart_404_settings.php`
+
+### Settings classes
+
+- `Smart404Settings`
+
+### Filament classes
+
+- `Smart404SettingsSchema`
+
+### Route files
+
+- `packages/smart-404/routes/web.php`
+
+### Actions
+
+- `InstallSmart404PackageAction`
+- `ResolveSmart404SuggestionsAction`
+
+### Data objects
+
+- `Smart404PublicUrlEntryData`
+- `Smart404SuggestionData`
+
+### Manifest action API
+
+- `install: Capell\Smart404\Actions\InstallSmart404PackageAction`
+- `resolveSuggestions: Capell\Smart404\Actions\ResolveSmart404SuggestionsAction`
+
+### Manifest contributions
+
+- `frontend-component: Capell\Smart404\Manifest\Smart404WidgetContribution`
+- `health-check: Capell\Smart404\Manifest\Smart404HealthContribution`
+- `route: Capell\Smart404\Manifest\Smart404FrontendRoutesContribution`
+- `setting: Capell\Smart404\Manifest\Smart404SettingsContribution`
+
+### Health checks
+
+- `Capell\Smart404\Health\Smart404HealthCheck`
+
+### Blade views
+
+- `packages/smart-404/resources/views/widget.blade.php`
+
+### Cache tags
+
+- `smart-404`
+
 
 ## Data Model
 
@@ -64,7 +110,7 @@ Screenshot contract: `screenshots.json`.
 - Required packages: `capell-app/admin`, `capell-app/core`, `capell-app/discovery-foundation`, `capell-app/frontend`.
 - Admin navigation: no admin page or resource contribution is declared.
 - Admin/editor extensions: none declared.
-- Permissions: none declared in `capell.json`.
+- Permissions: no package permission declarations or Shield gates detected; host access rules still apply.
 - Public routes: loads `routes/web.php`; registers `Smart404FrontendRoutesContribution`.
 - Database changes: no package migrations declared.
 - Config: `config/capell-smart-404.php`.
@@ -92,8 +138,7 @@ Screenshot contract: `screenshots.json`.
 ## Quick Start
 
 1. Install the package: `composer require capell-app/smart-404`.
-2. Review `config/capell-smart-404.php` before enabling the package.
-3. Open the package admin surface at `/extensions` and confirm Smart 404 is available.
+2. Open the package admin surface at `/extensions` and confirm Smart 404 is available.
 
 ## Next Steps
 
