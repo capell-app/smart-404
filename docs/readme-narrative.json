@@ -1,0 +1,35 @@
+{
+    "whatThisPluginAdds": {
+        "text": "Smart 404 turns missing-page dead ends into a short list of deterministic, site-scoped public URL suggestions.",
+        "evidence": [
+            "src/Actions/ResolveSmart404SuggestionsAction.php",
+            "resources/views/widget.blade.php",
+            "routes/web.php"
+        ]
+    },
+    "surfaceOutcome": {
+        "text": "Frontend and static 404 documents keep their 404 status while similar links and nearby hierarchy are available with or without JavaScript.",
+        "evidence": [
+            "resources/dist/smart-404.js",
+            "src/Support/RenderHooks/RegisterSmart404Hook.php",
+            "tests/Unit/Actions/ResolveSmart404SuggestionsActionTest.php"
+        ]
+    },
+    "whyItMatters": {
+        "developers": {
+            "text": "The resolver uses the shared registry, a fixed similarity threshold, safe relative URLs, and a bounded public endpoint rather than application-specific queries in Blade.",
+            "evidence": [
+                "src/Actions/ResolveSmart404SuggestionsAction.php",
+                "src/Http/Controllers/Smart404SuggestionsController.php",
+                "config/capell-smart-404.php"
+            ]
+        },
+        "teams": {
+            "text": "Visitors get useful next steps without redirects, visitor tracking, AI services, or exposing unpublished content.",
+            "evidence": [
+                "resources/views/widget.blade.php",
+                "src/Health/Smart404HealthCheck.php"
+            ]
+        }
+    }
+}

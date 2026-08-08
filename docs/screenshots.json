@@ -1,0 +1,9 @@
+{
+    "package": "smart-404",
+    "composerName": "capell-app/smart-404",
+    "generatedFor": "deployment-screenshot-runner",
+    "requiresInstalledPackage": true,
+    "outputDirectory": "packages/smart-404/docs/screenshots",
+    "entries": [],
+    "notes": "Authentic frontend, mobile, and settings captures are deferred until the package can be installed in a clean host application."
+}

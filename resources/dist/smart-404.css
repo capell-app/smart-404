@@ -1,0 +1,20 @@
+.capell-smart-404 {
+    margin-block: 2rem;
+}
+
+.capell-smart-404[hidden] {
+    display: none;
+}
+
+.capell-smart-404__list {
+    display: grid;
+    gap: .5rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.capell-smart-404__list a {
+    text-decoration: underline;
+    text-underline-offset: .15em;
+}
