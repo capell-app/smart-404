@@ -19,16 +19,49 @@
         "pestphp/pest": "^3.0|^4.0",
         "pestphp/pest-plugin-laravel": "^3.0|^4.0"
     },
-    "autoload": {"psr-4": {"Capell\\Smart404\\": "src/"}},
-    "autoload-dev": {"psr-4": {"Capell\\Smart404\\Tests\\": "tests/"}},
-    "extra": {
-        "laravel": {"providers": ["Capell\\Smart404\\Providers\\Smart404ServiceProvider"]},
-        "branch-alias": {"dev-main": "1.x-dev"}
+    "autoload": {
+        "psr-4": {
+            "Capell\\Smart404\\": "src/"
+        }
     },
-    "config": {"sort-packages": true},
+    "autoload-dev": {
+        "psr-4": {
+            "Capell\\Smart404\\Tests\\": "tests/"
+        }
+    },
+    "suggest": {
+        "capell-app/site-discovery": "Adapts legacy public URL registry entries when Site Discovery is installed."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Capell\\Smart404\\Providers\\Smart404ServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "prefer-stable": true,
     "homepage": "https://docs.capell.app/packages/smart-404",
-    "keywords": ["capell", "404", "discovery", "seo"],
-    "authors": [{"name": "Capell Team", "email": "team@capell.app", "role": "Developer"}],
-    "support": {"source": "https://github.com/capell-app/capell-packages", "docs": "https://docs.capell.app/packages/smart-404"}
+    "keywords": [
+        "capell",
+        "404",
+        "discovery",
+        "seo"
+    ],
+    "authors": [
+        {
+            "name": "Capell Team",
+            "email": "team@capell.app",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/capell-app/capell-packages",
+        "docs": "https://docs.capell.app/packages/smart-404"
+    }
 }

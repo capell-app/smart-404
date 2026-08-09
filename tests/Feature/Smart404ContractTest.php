@@ -132,7 +132,8 @@ it('adapts actual legacy registry entries and excludes noindex or foreign scope 
         entries: $entries,
     );
 
-    expect($suggestions->pluck('url')->all())->toBe(['/guides/laravel'])
+    expect($entries->first())->toBeInstanceOf(LegacyEntry::class)
+        ->and($suggestions->pluck('url')->all())->toBe(['/guides/laravel'])
         ->and($suggestions->firstOrFail()->title)->toBe('Laravel guide');
 });
 

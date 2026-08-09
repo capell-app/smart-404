@@ -7,12 +7,21 @@
     "capellApiVersion": "^1.0",
     "version": "1.0.0",
     "description": "Turn dead ends into useful next steps with deterministic, privacy-safe suggestions from the current site's public URL registry.",
-    "product": {"group": "Capell Search & SEO", "tier": "premium", "bundle": "search-seo"},
+    "product": {
+        "group": "Capell Search & SEO",
+        "tier": "premium",
+        "bundle": "search-seo"
+    },
     "namespace": "Capell\\Smart404",
     "surfaces": ["admin", "frontend", "console"],
     "dependencies": {
-        "requires": ["capell-app/admin", "capell-app/core", "capell-app/discovery-foundation", "capell-app/frontend"],
-        "supports": ["capell-app/search", "capell-app/site-discovery", "capell-app/seo-suite"],
+        "requires": [
+            "capell-app/admin",
+            "capell-app/core",
+            "capell-app/discovery-foundation",
+            "capell-app/frontend"
+        ],
+        "supports": ["capell-app/site-discovery"],
         "conflicts": []
     },
     "providers": {
@@ -23,28 +32,118 @@
         "frontend": []
     },
     "contributes": [
-        {"type": "route", "class": "Capell\\Smart404\\Manifest\\Smart404FrontendRoutesContribution", "routeNames": ["capell-smart-404.suggestions", "capell-smart-404.script", "capell-smart-404.styles"]},
-        {"type": "setting", "class": "Capell\\Smart404\\Manifest\\Smart404SettingsContribution", "settingsClass": "Capell\\Smart404\\Settings\\Smart404Settings", "settingsGroup": "smart_404", "settingsSchema": "Capell\\Smart404\\Filament\\Settings\\Smart404SettingsSchema"},
-        {"type": "health-check", "class": "Capell\\Smart404\\Manifest\\Smart404HealthContribution", "checkClass": "Capell\\Smart404\\Health\\Smart404HealthCheck"},
-        {"type": "frontend-component", "class": "Capell\\Smart404\\Manifest\\Smart404WidgetContribution", "view": "capell-smart-404::widget"}
+        {
+            "type": "route",
+            "class": "Capell\\Smart404\\Manifest\\Smart404FrontendRoutesContribution",
+            "routeNames": [
+                "capell-smart-404.suggestions",
+                "capell-smart-404.script",
+                "capell-smart-404.styles"
+            ]
+        },
+        {
+            "type": "setting",
+            "class": "Capell\\Smart404\\Manifest\\Smart404SettingsContribution",
+            "settingsClass": "Capell\\Smart404\\Settings\\Smart404Settings",
+            "settingsGroup": "smart_404",
+            "settingsSchema": "Capell\\Smart404\\Filament\\Settings\\Smart404SettingsSchema"
+        },
+        {
+            "type": "health-check",
+            "class": "Capell\\Smart404\\Manifest\\Smart404HealthContribution",
+            "checkClass": "Capell\\Smart404\\Health\\Smart404HealthCheck"
+        },
+        {
+            "type": "frontend-component",
+            "class": "Capell\\Smart404\\Manifest\\Smart404WidgetContribution",
+            "view": "capell-smart-404::widget"
+        }
     ],
-    "database": {"migrationGroup": "content-product", "migrations": false, "settings": true, "requiredTables": ["settings", "pages", "sites"]},
-    "commands": {"install": null, "setup": null, "demo": null, "doctor": null},
-    "actions": {"install": "Capell\\Smart404\\Actions\\InstallSmart404PackageAction", "resolveSuggestions": "Capell\\Smart404\\Actions\\ResolveSmart404SuggestionsAction"},
+    "database": {
+        "migrationGroup": "content-product",
+        "migrations": false,
+        "settings": true,
+        "requiredTables": ["settings", "pages", "sites"]
+    },
+    "commands": {
+        "install": null,
+        "setup": null,
+        "demo": null,
+        "doctor": null
+    },
+    "actions": {
+        "install": "Capell\\Smart404\\Actions\\InstallSmart404PackageAction",
+        "resolveSuggestions": "Capell\\Smart404\\Actions\\ResolveSmart404SuggestionsAction"
+    },
     "settings": ["Capell\\Smart404\\Settings\\Smart404Settings"],
     "permissions": [],
     "capabilities": ["smart-404", "smart-404-public-rate-limit"],
     "security": {
         "riskTier": "standard",
-        "publicSurface": {"routeNames": ["capell-smart-404.suggestions", "capell-smart-404.script", "capell-smart-404.styles"], "auth": "public", "csrfExemptRoutes": [], "signedRoutes": [], "tokenizedRoutes": [], "webhookRoutes": [], "throttledRoutes": ["capell-smart-404.suggestions"]},
-        "sensitiveData": {"encryptedFields": [], "hashedTokenFields": [], "redactedOutputClasses": [], "plaintextJustifications": []},
-        "publicOutput": {"cacheSafe": true, "forbidAuthoringSurface": true, "forbidSecrets": true, "forbidPublicBladeQueries": true},
-        "externalHttpClients": {"requiresTimeouts": false, "requiresSecretRedaction": false, "clients": []},
-        "adminSurface": {"authorization": "panel-auth", "permissions": []}
+        "publicSurface": {
+            "routeNames": [
+                "capell-smart-404.suggestions",
+                "capell-smart-404.script",
+                "capell-smart-404.styles"
+            ],
+            "auth": "public",
+            "csrfExemptRoutes": [],
+            "signedRoutes": [],
+            "tokenizedRoutes": [],
+            "webhookRoutes": [],
+            "throttledRoutes": ["capell-smart-404.suggestions"]
+        },
+        "sensitiveData": {
+            "encryptedFields": [],
+            "hashedTokenFields": [],
+            "redactedOutputClasses": [],
+            "plaintextJustifications": []
+        },
+        "publicOutput": {
+            "cacheSafe": true,
+            "forbidAuthoringSurface": true,
+            "forbidSecrets": true,
+            "forbidPublicBladeQueries": true
+        },
+        "externalHttpClients": {
+            "requiresTimeouts": false,
+            "requiresSecretRedaction": false,
+            "clients": []
+        },
+        "adminSurface": { "authorization": "panel-auth", "permissions": [] }
     },
-    "performance": {"frontendRenderBudgetMs": 20, "adminQueryBudget": 20, "cacheTags": ["smart-404"], "cacheSafety": {"cacheable": false, "variesBy": ["site", "locale", "path"], "sensitiveOutput": false, "invalidationSources": [], "queueInvalidation": true}},
-    "healthChecks": [{"key": "smart-404.suggestions", "label": "Smart 404 suggestions resolve from scoped public URLs.", "class": "Capell\\Smart404\\Health\\Smart404HealthCheck", "severity": "critical", "surface": "frontend"}],
-    "commercial": {"proposedLicense": "paid", "requestedCertification": "first-party", "supportPolicy": "priority", "privateDocsRequested": true},
-    "marketplace": {"summary": "Helpful 404 suggestions from your site's public URL registry.", "description": "Smart 404 keeps the original 404 status while offering deterministic, site- and language-scoped links based on similar public URLs and nearby hierarchy. It uses no analytics, AI service, redirect, or authoring data in public HTML.", "screenshots": [], "categories": ["frontend", "search-seo"]},
-    "contributionTraceability": {"deferredContributions": []}
+    "performance": {
+        "frontendRenderBudgetMs": 20,
+        "adminQueryBudget": 20,
+        "cacheTags": ["smart-404"],
+        "cacheSafety": {
+            "cacheable": false,
+            "variesBy": ["site", "locale", "path"],
+            "sensitiveOutput": false,
+            "invalidationSources": [],
+            "queueInvalidation": true
+        }
+    },
+    "healthChecks": [
+        {
+            "key": "smart-404.suggestions",
+            "label": "Smart 404 suggestions resolve from scoped public URLs.",
+            "class": "Capell\\Smart404\\Health\\Smart404HealthCheck",
+            "severity": "critical",
+            "surface": "frontend"
+        }
+    ],
+    "commercial": {
+        "proposedLicense": "paid",
+        "requestedCertification": "first-party",
+        "supportPolicy": "priority",
+        "privateDocsRequested": true
+    },
+    "marketplace": {
+        "summary": "Helpful 404 suggestions from your site's public URL registry.",
+        "description": "Smart 404 keeps the original 404 status while offering deterministic, site- and language-scoped links based on similar public URLs and nearby hierarchy. It uses no analytics, AI service, redirect, or authoring data in public HTML.",
+        "screenshots": [],
+        "categories": ["frontend", "search-seo"]
+    },
+    "contributionTraceability": { "deferredContributions": [] }
 }

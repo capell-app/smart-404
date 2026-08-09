@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Capell\Smart404\Support\PublicUrls;
 
 use BackedEnum;
+use Capell\Core\Facades\CapellCore;
 use Capell\DiscoveryFoundation\Data\PublicUrlRegistryEntryData as FoundationPublicUrlRegistryEntryData;
 use Capell\DiscoveryFoundation\Enums\PublicUrlIndexability as FoundationPublicUrlIndexability;
+use Capell\SiteDiscovery\Data\PublicUrlRegistryEntryData;
 use Capell\Smart404\Data\Smart404PublicUrlEntryData;
 use Illuminate\Support\Collection;
 
 final class Smart404PublicUrlRegistryAdapter
 {
-    private const string LegacyEntryClass = 'Capell\\SiteDiscovery\\Data\\PublicUrlRegistryEntryData';
-
     /**
      * @param  Collection<int, covariant mixed>  $entries
      * @return Collection<int, Smart404PublicUrlEntryData>
@@ -32,8 +32,8 @@ final class Smart404PublicUrlRegistryAdapter
             return $this->fromFoundation($entry);
         }
 
-        $legacyEntryClass = self::LegacyEntryClass;
-        if (class_exists($legacyEntryClass) && $entry instanceof $legacyEntryClass) {
+        if (CapellCore::isPackageAvailable('capell-app/site-discovery')
+            && $entry instanceof PublicUrlRegistryEntryData) {
             return $this->fromSiteDiscovery($entry);
         }
 
