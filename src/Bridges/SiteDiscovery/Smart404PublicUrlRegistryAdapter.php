@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Capell\Smart404\Support\PublicUrls;
+namespace Capell\Smart404\Bridges\SiteDiscovery;
 
 use BackedEnum;
 use Capell\Core\Facades\CapellCore;

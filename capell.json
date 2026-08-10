@@ -5,7 +5,7 @@
     "displayName": "Smart 404",
     "kind": "package",
     "capellApiVersion": "^1.0",
-    "version": "1.0.0",
+    "version": "1.x-dev",
     "description": "Turn dead ends into useful next steps with deterministic, privacy-safe suggestions from the current site's public URL registry.",
     "product": {
         "group": "Capell Search & SEO",
@@ -82,9 +82,9 @@
         "riskTier": "standard",
         "publicSurface": {
             "routeNames": [
-                "capell-smart-404.suggestions",
                 "capell-smart-404.script",
-                "capell-smart-404.styles"
+                "capell-smart-404.styles",
+                "capell-smart-404.suggestions"
             ],
             "auth": "public",
             "csrfExemptRoutes": [],
@@ -110,7 +110,10 @@
             "requiresSecretRedaction": false,
             "clients": []
         },
-        "adminSurface": { "authorization": "panel-auth", "permissions": [] }
+        "adminSurface": {
+            "authorization": "panel-auth",
+            "permissions": []
+        }
     },
     "performance": {
         "frontendRenderBudgetMs": 20,
