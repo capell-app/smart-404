@@ -8,6 +8,30 @@ use Capell\Smart404\Health\Smart404HealthCheck;
 use Capell\Smart404\Manifest\Smart404WidgetContribution;
 use Capell\Smart404\Settings\Smart404Settings;
 
+/**
+ * @return array<string, mixed>
+ */
+function smart404EvidenceJson(string $relativePath): array
+{
+    $decoded = json_decode(
+        (string) file_get_contents(dirname(__DIR__, 2) . '/' . $relativePath),
+        associative: true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    throw_unless(is_array($decoded), RuntimeException::class, 'Expected Smart 404 evidence JSON to decode to an array.');
+
+    $normalized = [];
+
+    foreach ($decoded as $key => $value) {
+        throw_unless(is_string($key), RuntimeException::class, 'Expected Smart 404 evidence JSON to use string keys.');
+
+        $normalized[$key] = $value;
+    }
+
+    return $normalized;
+}
+
 it('resolves every manifest class and matches the installed settings and routes', function (): void {
     $contents = file_get_contents(__DIR__ . '/../../capell.json');
     if ($contents === false) {
@@ -68,4 +92,34 @@ it('resolves every manifest class and matches the installed settings and routes'
         ->and($settingsSchema)->toBe(Smart404SettingsSchema::class)
         ->and(Smart404WidgetContribution::class)->toImplement(RegistersExtensionFrontendComponent::class)
         ->and(class_exists(Smart404HealthCheck::class))->toBeTrue();
+});
+
+it('keeps the installed-App evidence contract explicit and Marketplace promotion fail-closed', function (): void {
+    $manifest = smart404EvidenceJson('capell.json');
+    $screenshots = smart404EvidenceJson('docs/screenshots.json');
+    $rawEntries = $screenshots['entries'] ?? null;
+
+    throw_unless(is_array($rawEntries), RuntimeException::class, 'Expected Smart 404 screenshot entries to be an array.');
+
+    $entries = [];
+
+    foreach ($rawEntries as $entry) {
+        throw_unless(is_array($entry), RuntimeException::class, 'Expected every Smart 404 screenshot entry to be an array.');
+
+        $entries[] = $entry;
+    }
+
+    expect(data_get($manifest, 'marketplace.screenshots'))->toBe([])
+        ->and($entries)->toHaveCount(3)
+        ->and(collect($entries)->pluck('id')->all())->toBe([
+            'smart-404-missing-page-desktop',
+            'smart-404-missing-page-mobile',
+            'smart-404-settings',
+        ])
+        ->and($entries[0]['expectedStatus'])->toBe(404)
+        ->and($entries[1]['expectedStatus'])->toBe(404)
+        ->and($entries[0]['viewport'])->toBe('desktop')
+        ->and($entries[1]['viewport'])->toBe('mobile')
+        ->and(collect($entries)->every(static fn (array $entry): bool => ($entry['required'] ?? true) === false
+            && ($entry['promotionRequired'] ?? false) === true))->toBeTrue();
 });

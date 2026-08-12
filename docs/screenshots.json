@@ -4,6 +4,53 @@
     "generatedFor": "deployment-screenshot-runner",
     "requiresInstalledPackage": true,
     "outputDirectory": "packages/smart-404/docs/screenshots",
-    "entries": [],
-    "notes": "Authentic frontend, mobile, and settings captures are deferred until the package can be installed in a clean host application."
+    "entries": [
+        {
+            "id": "smart-404-missing-page-desktop",
+            "title": "Smart 404 suggestions on a missing public page (desktop).",
+            "package": "smart-404",
+            "surface": "frontend",
+            "targetType": "frontend-url",
+            "target": "/smart-404-evidence-desktop-missing",
+            "url": "/smart-404-evidence-desktop-missing",
+            "expectedStatus": 404,
+            "viewport": "desktop",
+            "required": false,
+            "promotionRequired": true,
+            "notes": "Deferred authentic installed-App capture. Run the package's install flow, seed scoped public URLs, and capture the real missing route anonymously. Confirm the response remains 404 and only public suggestion links are visible; do not use a fixture or placeholder.",
+            "useCase": "A visitor reaches a missing desktop page and receives useful, privacy-safe next steps.",
+            "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-desktop.png"
+        },
+        {
+            "id": "smart-404-missing-page-mobile",
+            "title": "Smart 404 suggestions on a missing public page (mobile).",
+            "package": "smart-404",
+            "surface": "frontend",
+            "targetType": "frontend-url",
+            "target": "/smart-404-evidence-mobile-missing",
+            "url": "/smart-404-evidence-mobile-missing",
+            "expectedStatus": 404,
+            "viewport": "mobile",
+            "required": false,
+            "promotionRequired": true,
+            "notes": "Deferred authentic installed-App capture. Use the same seeded public URL registry and anonymous missing route at the mobile viewport. Confirm the accessible suggestion list is visible without authoring or package internals; do not use a fixture or placeholder.",
+            "useCase": "A mobile visitor reaches a missing page and can select a useful next step.",
+            "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-mobile.png"
+        },
+        {
+            "id": "smart-404-settings",
+            "title": "Smart 404 settings.",
+            "package": "smart-404",
+            "surface": "admin",
+            "targetType": "settings",
+            "target": "/admin/settings",
+            "url": "/admin/settings",
+            "required": false,
+            "promotionRequired": true,
+            "notes": "Deferred authentic installed-App capture. Capture the Smart 404 settings contribution with an authenticated administrator after installation and settings migration. Redact secrets and prove the package-owned settings section is present; do not use a fixture or placeholder.",
+            "useCase": "A site owner enables Smart 404 and chooses the maximum number of suggestions.",
+            "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-settings.png"
+        }
+    ],
+    "notes": "The three entries are deferred capture contracts, not current artifact requirements. `promotionRequired` preserves the future gate: once authentic installed-App receipts and reviewed output files exist, each entry must be promoted to `required: true` before adding any Marketplace reference."
 }

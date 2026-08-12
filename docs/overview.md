@@ -14,7 +14,7 @@ Smart 404 renders a small accessible suggestion list after error content and hyd
 
 ## Screens And Workflow
 
-Desktop, mobile, and settings captures require an authentic host integration and are deferred in the screenshot contract.
+The screenshot contract defines three future-required installed-App captures: an anonymous 404 at desktop and mobile widths, plus the authenticated `/admin/settings` contribution. They remain `required: false` while deferred so strict artifact and fixture-hygiene checks do not treat absent outputs as committed evidence; `promotionRequired: true` preserves the gate that authentic receipts and reviewed output files must exist before promotion. No placeholder or fixture image is Marketplace evidence; `capell.json` therefore keeps its Marketplace screenshot list empty until those captures are reviewed and promoted.
 
 ## Technical Shape
 
