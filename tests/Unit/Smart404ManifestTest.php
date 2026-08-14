@@ -2,11 +2,22 @@
 
 declare(strict_types=1);
 
+use Capell\Admin\Support\Extensions\ExtensionManagementSurfaceRegistry;
 use Capell\Core\Contracts\Extensions\RegistersExtensionFrontendComponent;
 use Capell\Smart404\Filament\Settings\Smart404SettingsSchema;
 use Capell\Smart404\Health\Smart404HealthCheck;
 use Capell\Smart404\Manifest\Smart404WidgetContribution;
+use Capell\Smart404\Providers\AdminServiceProvider as Smart404AdminServiceProvider;
 use Capell\Smart404\Settings\Smart404Settings;
+
+it('registers the installed Smart 404 settings management surface', function (): void {
+    $surface = collect(resolve(ExtensionManagementSurfaceRegistry::class)
+        ->surfacesForPackage('capell-app/smart-404'))
+        ->firstWhere('settingsGroup', Smart404Settings::group());
+
+    expect($surface)->not->toBeNull()
+        ->and($surface?->type)->toBe('settings');
+});
 
 /**
  * @return array<string, mixed>
@@ -88,13 +99,14 @@ it('resolves every manifest class and matches the installed settings and routes'
     ];
 
     expect(collect($classes)->every(static fn (string $class): bool => class_exists($class)))->toBeTrue()
+        ->and($providers['admin'] ?? null)->toBe([Smart404AdminServiceProvider::class])
         ->and($settingsGroup)->toBe(Smart404Settings::group())
         ->and($settingsSchema)->toBe(Smart404SettingsSchema::class)
         ->and(Smart404WidgetContribution::class)->toImplement(RegistersExtensionFrontendComponent::class)
         ->and(class_exists(Smart404HealthCheck::class))->toBeTrue();
 });
 
-it('keeps the installed-App evidence contract explicit and Marketplace promotion fail-closed', function (): void {
+it('keeps the promoted installed-App evidence contract explicit and fail-closed', function (): void {
     $manifest = smart404EvidenceJson('capell.json');
     $screenshots = smart404EvidenceJson('docs/screenshots.json');
     $rawEntries = $screenshots['entries'] ?? null;
@@ -109,7 +121,18 @@ it('keeps the installed-App evidence contract explicit and Marketplace promotion
         $entries[] = $entry;
     }
 
-    expect(data_get($manifest, 'marketplace.screenshots'))->toBe([])
+    $marketplaceScreenshots = data_get($manifest, 'marketplace.screenshots');
+
+    throw_unless(is_array($marketplaceScreenshots), RuntimeException::class, 'Expected Smart 404 Marketplace screenshots to be an array.');
+
+    expect(collect($marketplaceScreenshots)->pluck('path')->all())->toBe([
+        'docs/screenshots/smart-404-missing-page-desktop.png',
+        'docs/screenshots/smart-404-missing-page-mobile.png',
+        'docs/screenshots/smart-404-settings.png',
+    ])
+        ->and(collect($marketplaceScreenshots)->every(
+            static fn (mixed $screenshot): bool => is_array($screenshot) && ($screenshot['required'] ?? false) === true,
+        ))->toBeTrue()
         ->and($entries)->toHaveCount(3)
         ->and(collect($entries)->pluck('id')->all())->toBe([
             'smart-404-missing-page-desktop',
@@ -120,6 +143,24 @@ it('keeps the installed-App evidence contract explicit and Marketplace promotion
         ->and($entries[1]['expectedStatus'])->toBe(404)
         ->and($entries[0]['viewport'])->toBe('desktop')
         ->and($entries[1]['viewport'])->toBe('mobile')
-        ->and(collect($entries)->every(static fn (array $entry): bool => ($entry['required'] ?? true) === false
-            && ($entry['promotionRequired'] ?? false) === true))->toBeTrue();
+        ->and($entries[2]['url'])->toBe('/extensions')
+        ->and($entries[2]['waitFor'])->toBe('.fi-modal-open .fi-modal-window')
+        ->and($entries[2]['beforeWait'])->toBe([
+            [
+                'type' => 'fill',
+                'selector' => 'input[wire\\:model\\.live\\.debounce\\.500ms="tableSearch"]',
+                'value' => 'Smart 404',
+            ],
+            ['type' => 'waitForTimeout', 'timeout' => 2000],
+            [
+                'type' => 'click',
+                'selector' => 'button[wire\\:click*="manageExtension"]:has-text("Edit")',
+            ],
+        ])
+        ->and(collect($entries)->every(static fn (array $entry): bool => ($entry['required'] ?? false) === true
+            && ($entry['promotionRequired'] ?? false) === true
+            && is_string($entry['screenshotPath'] ?? null)
+            && is_string($entry['darkScreenshotPath'] ?? null)
+            && file_exists(dirname(__DIR__, 4) . '/' . $entry['screenshotPath'])
+            && file_exists(dirname(__DIR__, 4) . '/' . $entry['darkScreenshotPath'])))->toBeTrue();
 });

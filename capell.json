@@ -28,7 +28,7 @@
         "metadata": [],
         "install": [],
         "runtime": ["Capell\\Smart404\\Providers\\Smart404ServiceProvider"],
-        "admin": [],
+        "admin": ["Capell\\Smart404\\Providers\\AdminServiceProvider"],
         "frontend": []
     },
     "contributes": [
@@ -145,7 +145,26 @@
     "marketplace": {
         "summary": "Helpful 404 suggestions from your site's public URL registry.",
         "description": "Smart 404 keeps the original 404 status while offering deterministic, site- and language-scoped links based on similar public URLs and nearby hierarchy. It uses no analytics, AI service, redirect, or authoring data in public HTML.",
-        "screenshots": [],
+        "screenshots": [
+            {
+                "path": "docs/screenshots/smart-404-missing-page-desktop.png",
+                "alt": "Smart 404 suggestions on an anonymous missing page at desktop width",
+                "caption": "Privacy-safe next steps while preserving the original HTTP 404 response",
+                "required": true
+            },
+            {
+                "path": "docs/screenshots/smart-404-missing-page-mobile.png",
+                "alt": "Smart 404 suggestions on an anonymous missing page at mobile width",
+                "caption": "Responsive missing-page suggestions for mobile visitors",
+                "required": true
+            },
+            {
+                "path": "docs/screenshots/smart-404-settings.png",
+                "alt": "Smart 404 settings modal in the authenticated Extensions admin",
+                "caption": "Enable Smart 404 and choose the maximum number of suggestions",
+                "required": true
+            }
+        ],
         "categories": ["frontend", "search-seo"]
     },
     "contributionTraceability": { "deferredContributions": [] }

@@ -18,7 +18,6 @@ use Capell\Smart404\Support\RenderHooks\RegisterSmart404Hook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use Livewire\Blaze\Blaze;
 use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function (): void {
@@ -227,20 +226,11 @@ it('declares a bounded public rate limit and preserves an error response status 
         extension: new RegisterSmart404Hook,
     );
 
-    $wasBlazeEnabled = Blaze::isEnabled();
-    Blaze::disable();
-
-    try {
-        $output = $registry->renderAll(
-            RenderHookLocation::AfterContent,
-            scenario: 'frontend-main-layout',
-            target: 'capell::layout.main',
-        );
-    } finally {
-        if ($wasBlazeEnabled) {
-            Blaze::enable();
-        }
-    }
+    $output = $registry->renderAll(
+        RenderHookLocation::AfterContent,
+        scenario: 'frontend-main-layout',
+        target: 'capell::layout.main',
+    );
     $response = response()->make('<main>' . $output . '</main>', Response::HTTP_NOT_FOUND);
 
     expect($response->getStatusCode())->toBe(Response::HTTP_NOT_FOUND)

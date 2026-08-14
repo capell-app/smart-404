@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Capell\Smart404\Providers;
 
-use Capell\Core\Actions\RegisterBlazeOptimizedViewsAction;
 use Capell\Core\Enums\PackageTypeEnum;
 use Capell\Core\Facades\CapellCore;
 use Capell\Core\Models\Language;
@@ -45,6 +44,13 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
             ->hasMigrations(['2026_08_08_000001_create_smart_404_settings']);
     }
 
+    public function registeringPackage(): void
+    {
+        parent::registeringPackage();
+
+        $this->app->register(AdminServiceProvider::class);
+    }
+
     public function packageBooted(): void
     {
         $this->registerRateLimiter();
@@ -55,7 +61,6 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
 
         $this->registerSettings();
         $this->registerFrontendDataListener();
-        RegisterBlazeOptimizedViewsAction::run(__DIR__ . '/../../resources/views');
 
         if ($this->app->bound(FrontendHookRegistrar::class)) {
             resolve(FrontendHookRegistrar::class)->contribute(
