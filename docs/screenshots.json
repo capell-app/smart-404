@@ -60,7 +60,7 @@
                 },
                 {
                     "type": "click",
-                    "selector": "button[wire\\:click*=\"manageExtension\"]:has-text(\"Edit\")"
+                    "selector": "button[wire\\:click*=\"mountTableAction\"][aria-label*=\"Smart 404\"]"
                 }
             ],
             "interactions": [

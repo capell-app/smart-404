@@ -154,7 +154,7 @@ it('keeps the promoted installed-App evidence contract explicit and fail-closed'
             ['type' => 'waitForTimeout', 'timeout' => 2000],
             [
                 'type' => 'click',
-                'selector' => 'button[wire\\:click*="manageExtension"]:has-text("Edit")',
+                'selector' => 'button[wire\\:click*="mountTableAction"][aria-label*="Smart 404"]',
             ],
         ])
         ->and(collect($entries)->every(static fn (array $entry): bool => ($entry['required'] ?? false) === true
