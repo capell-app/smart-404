@@ -10,8 +10,6 @@ Smart 404 turns missing-page dead ends into a short list of deterministic, site-
 
 Frontend and static 404 documents keep their 404 status while similar links and nearby hierarchy are available with or without JavaScript.
 
-Evidence: [`src/Actions/ResolveSmart404SuggestionsAction.php`](src/Actions/ResolveSmart404SuggestionsAction.php), [`resources/views/widget.blade.php`](resources/views/widget.blade.php), [`routes/web.php`](routes/web.php), [`resources/dist/smart-404.js`](resources/dist/smart-404.js), [`src/Support/RenderHooks/RegisterSmart404Hook.php`](src/Support/RenderHooks/RegisterSmart404Hook.php), [`tests/Unit/Actions/ResolveSmart404SuggestionsActionTest.php`](tests/Unit/Actions/ResolveSmart404SuggestionsActionTest.php).
-
 Status details:
 
 - Status: Available
@@ -26,8 +24,6 @@ Status details:
 **For developers:** The resolver uses the shared registry, a fixed similarity threshold, safe relative URLs, and a bounded public endpoint rather than application-specific queries in Blade.
 
 **For teams:** Visitors get useful next steps without redirects, visitor tracking, AI services, or exposing unpublished content.
-
-Evidence: [`src/Actions/ResolveSmart404SuggestionsAction.php`](src/Actions/ResolveSmart404SuggestionsAction.php), [`src/Http/Controllers/Smart404SuggestionsController.php`](src/Http/Controllers/Smart404SuggestionsController.php), [`config/capell-smart-404.php`](config/capell-smart-404.php), [`resources/views/widget.blade.php`](resources/views/widget.blade.php), [`src/Health/Smart404HealthCheck.php`](src/Health/Smart404HealthCheck.php).
 
 ## Screens And Workflow
 
@@ -142,12 +138,13 @@ Screenshot contract: `docs/screenshots.json`.
 ## Quick Start
 
 1. Install the package: `composer require capell-app/smart-404`.
-2. Open the package admin surface at `/extensions` and confirm Smart 404 is available.
+2. Open the package admin surface at `/admin/extensions` and confirm Smart 404 is available.
 
 ## Next Steps
 
 - [Package docs](docs/README.md)
 - [Overview](docs/overview.md)
+- [Worked extension examples](docs/extension-contracts.md)
 - Configuration files: [`config/capell-smart-404.php`](config/capell-smart-404.php).
 - [Troubleshooting](#troubleshooting)
 - [Screenshot contract](docs/screenshots.json)
@@ -155,6 +152,5 @@ Screenshot contract: `docs/screenshots.json`.
 - [Capell documentation design system](../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../docs/erd/capell-and-package-erds.md)
 - Related packages: [Discovery Foundation](../discovery-foundation/README.md), [Site Discovery](../site-discovery/README.md).
-- Focused tests: `vendor/bin/pest packages/smart-404/tests --configuration=phpunit.xml`.
 
 <!-- prettier-ignore-end -->
