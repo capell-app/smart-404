@@ -41,12 +41,7 @@ Smart 404 modal with enablement and maximum-suggestions controls unobstructed.
 The native-pixel diagnostic crop used to settle the scaled dark-preview question
 is retained outside the repository and is not a promoted screenshot.
 
-Validate both the output paths and manifest synchronization with:
-
-```bash
-npm run screenshots:capture:check
-npm run screenshots:check
-```
+The screenshot manifest lists the published output paths and their required capture states.
 
 If these outputs are replaced, the replacement must repeat the same shared-runner
 receipt and human-review gate. A manifest check without authentic outputs remains

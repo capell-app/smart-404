@@ -7,6 +7,7 @@ namespace Capell\Smart404\Actions;
 use Capell\Core\Models\Language;
 use Capell\Core\Models\Site;
 use Capell\DiscoveryFoundation\Actions\BuildPublicUrlRegistryAction;
+use Capell\DiscoveryFoundation\Actions\DiscoverPublicPagesAction;
 use Capell\DiscoveryFoundation\Actions\ScorePublicUrlCandidateAction;
 use Capell\Smart404\Bridges\SiteDiscovery\Smart404PublicUrlRegistryAdapter;
 use Capell\Smart404\Data\Smart404PublicUrlEntryData;
@@ -42,6 +43,10 @@ final class ResolveSmart404SuggestionsAction
         if ($requestedPath === null) {
             return collect();
         }
+
+        $navigationLabels = $entries === null && $site instanceof Site && $language instanceof Language
+            ? $this->navigationLabels($site, $language)
+            : [];
 
         /** @var Collection<int, array{entry: Smart404PublicUrlEntryData, url: string}> $registry */
         $registry = (new Smart404PublicUrlRegistryAdapter)->adapt($entries ?? BuildPublicUrlRegistryAction::run())
@@ -135,7 +140,39 @@ final class ResolveSmart404SuggestionsAction
                 ->values();
         }
 
-        return $suggestions;
+        return $suggestions->map(static fn (Smart404SuggestionData $suggestion): Smart404SuggestionData => new Smart404SuggestionData(
+            title: $navigationLabels[$suggestion->url] ?? $suggestion->title,
+            url: $suggestion->url,
+        ));
+    }
+
+    /**
+     * Discovery retains full titles for matching; visible recovery links use
+     * the already hydrated translation for the requested site's language.
+     *
+     * @return array<string, string>
+     */
+    private function navigationLabels(Site $site, Language $language): array
+    {
+        $labels = [];
+
+        foreach (DiscoverPublicPagesAction::run($site, $language) as $discoveredPage) {
+            $label = $discoveredPage->page?->translation?->label;
+
+            if (! is_string($label) || trim($label) === '') {
+                continue;
+            }
+
+            $label = trim($label);
+            $suffix = ' | ' . $site->name;
+            if (str_ends_with($label, $suffix)) {
+                $label = substr($label, 0, -strlen($suffix));
+            }
+
+            $labels[$this->relativeUrl($discoveredPage->url)] = $label;
+        }
+
+        return $labels;
     }
 
     /**
