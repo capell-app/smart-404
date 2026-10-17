@@ -21,7 +21,10 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
+use Override;
+use ReflectionProperty;
 use Spatie\LaravelPackageTools\Package;
 
 final class Smart404ServiceProvider extends AbstractPackageServiceProvider
@@ -32,6 +35,7 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
 
     public static PackageTypeEnum $type = PackageTypeEnum::Plugin;
 
+    #[Override]
     public function configurePackage(Package $package): void
     {
         $package
@@ -40,23 +44,35 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
             ->hasTranslations()
             ->hasViews(self::$name)
             ->hasAssets()
-            ->hasRoute('web')
             ->hasMigrations(['2026_08_08_000001_create_smart_404_settings']);
     }
 
+    #[Override]
     public function registeringPackage(): void
     {
-        parent::registeringPackage();
-
         $this->app->register(AdminServiceProvider::class);
+
+        parent::registeringPackage();
     }
 
+    #[Override]
     public function packageBooted(): void
     {
         $this->registerRateLimiter();
+    }
 
-        if (! $this->isPackageInstalled()) {
-            return;
+    #[Override]
+    protected function bootInstalledRuntime(): void
+    {
+        // Late activation may run inside a foreign route group.
+        $router = $this->app->make(Router::class);
+        $groups = new ReflectionProperty(Router::class, 'groupStack');
+        $previous = $groups->getValue($router);
+        $groups->setValue($router, []);
+        try {
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        } finally {
+            $groups->setValue($router, $previous);
         }
 
         $this->registerSettings();
@@ -73,9 +89,9 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
                 cacheSafe: false,
             );
         }
-
     }
 
+    #[Override]
     protected function isPackageInstalled(): bool
     {
         return CapellCore::isPackageInstalled(self::$packageName);

@@ -20,7 +20,8 @@
             "notes": "Captured anonymously from the installed App at the exact desktop missing-page route. The runner receipt preserves HTTP 404, clean source provenance, and zero browser/backend diagnostics.",
             "useCase": "A visitor reaches a missing desktop page and receives useful, privacy-safe next steps.",
             "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-desktop.png",
-            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-desktop-dark.png"
+            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-desktop-dark.png",
+            "expectedState": "not-found"
         },
         {
             "id": "smart-404-missing-page-mobile",
@@ -37,7 +38,8 @@
             "notes": "Captured anonymously from the installed App at the exact mobile missing-page route. The runner receipt preserves HTTP 404, clean source provenance, and zero browser/backend diagnostics.",
             "useCase": "A mobile visitor reaches a missing page and can select a useful next step.",
             "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-mobile.png",
-            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-mobile-dark.png"
+            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-missing-page-mobile-dark.png",
+            "expectedState": "not-found"
         },
         {
             "id": "smart-404-settings",
@@ -74,7 +76,8 @@
             "notes": "Captured from the installed App's filtered Extensions management action with an authenticated administrator. The runner receipt records the admin profile, HTTP 200, clean source provenance, and zero browser/backend diagnostics.",
             "useCase": "A site owner enables Smart 404 and chooses the maximum number of suggestions.",
             "screenshotPath": "packages/smart-404/docs/screenshots/smart-404-settings.png",
-            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-settings-dark.png"
+            "darkScreenshotPath": "packages/smart-404/docs/screenshots/smart-404-settings-dark.png",
+            "expectedState": "not-found"
         }
     ],
     "notes": "All three route-backed entries were captured in light and dark modes through the shared runner from an isolated installed App and promoted only after receipt validation and human visual review. `promotionRequired` keeps Marketplace references fail-closed if an entry is later deferred."
