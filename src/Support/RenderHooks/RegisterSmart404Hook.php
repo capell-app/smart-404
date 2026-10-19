@@ -7,13 +7,16 @@ namespace Capell\Smart404\Support\RenderHooks;
 use Capell\Frontend\Contracts\RenderHookExtensionInterface;
 use Capell\Frontend\Data\RenderHookContext;
 use Capell\Frontend\Facades\Frontend;
+use Capell\Smart404\Actions\IsSmart404EnabledAction;
 use Capell\Smart404\Data\Smart404SuggestionData;
+use Override;
 
 final class RegisterSmart404Hook implements RenderHookExtensionInterface
 {
+    #[Override]
     public function render(RenderHookContext $context): string
     {
-        if (! Frontend::isError()) {
+        if (! Frontend::isError() || ! IsSmart404EnabledAction::run()) {
             return '';
         }
 

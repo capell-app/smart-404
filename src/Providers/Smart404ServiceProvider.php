@@ -13,6 +13,7 @@ use Capell\Core\Support\Settings\SettingsGroupMetadata;
 use Capell\Frontend\Enums\RenderHookLocation;
 use Capell\Frontend\Events\FrontendRenderPreparing;
 use Capell\Frontend\Support\Render\FrontendHookRegistrar;
+use Capell\Smart404\Actions\IsSmart404EnabledAction;
 use Capell\Smart404\Actions\ResolveSmart404SuggestionsAction;
 use Capell\Smart404\Filament\Settings\Smart404SettingsSchema;
 use Capell\Smart404\Settings\Smart404Settings;
@@ -104,7 +105,8 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
             static function (FrontendRenderPreparing $event): void {
                 if (! $event->renderContext->isError
                     || ! $event->renderContext->site instanceof Site
-                    || ! $event->renderContext->language instanceof Language) {
+                    || ! $event->renderContext->language instanceof Language
+                    || ! IsSmart404EnabledAction::run()) {
                     return;
                 }
 

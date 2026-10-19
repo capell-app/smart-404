@@ -6,21 +6,18 @@ namespace Capell\Smart404\Http\Controllers;
 
 use Capell\Core\Models\SiteDomain;
 use Capell\Frontend\Contracts\FrontendContextReader;
+use Capell\Smart404\Actions\IsSmart404EnabledAction;
 use Capell\Smart404\Actions\ResolveSmart404SuggestionsAction;
 use Capell\Smart404\Data\Smart404SuggestionData;
-use Capell\Smart404\Settings\Smart404Settings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Throwable;
 
 final class Smart404SuggestionsController
 {
     public function __invoke(Request $request): JsonResponse
     {
-        if (! $this->enabled()) {
-            abort(404);
-        }
+        abort_unless(IsSmart404EnabledAction::run(), 404);
 
         $path = $request->query('path');
         if (! is_string($path) || $this->malformedPath($path)) {
@@ -62,19 +59,6 @@ final class Smart404SuggestionsController
             ])->values()->all()])
             ->header('Cache-Control', 'private, max-age=60')
             ->header('Vary', 'Host, Accept-Language');
-    }
-
-    private function enabled(): bool
-    {
-        try {
-            if (app()->bound(Smart404Settings::class)) {
-                return resolve(Smart404Settings::class)->enabled === true;
-            }
-        } catch (Throwable) {
-            // Fall back to config when settings have not been installed yet.
-        }
-
-        return config('capell-smart-404.enabled', true) === true;
     }
 
     private function malformedPath(string $path): bool
