@@ -63,6 +63,7 @@ Screenshot contract: `screenshots.json`.
 ### Actions
 
 - `InstallSmart404PackageAction`
+- `IsSmart404EnabledAction`
 - `ResolveSmart404SuggestionsAction`
 
 ### Data objects
@@ -143,6 +144,7 @@ Screenshot contract: `screenshots.json`.
 - Configuration files: [`config/capell-smart-404.php`](../config/capell-smart-404.php).
 - [Developer troubleshooting](../README.md#troubleshooting)
 - [Screenshot contract](screenshots.json)
+- [Marketplace assets](assets/marketplace/)
 - [Capell content language plan](../../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../../docs/erd/capell-and-package-erds.md)

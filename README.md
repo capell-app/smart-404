@@ -67,6 +67,7 @@ Screenshot contract: `docs/screenshots.json`.
 ### Actions
 
 - `InstallSmart404PackageAction`
+- `IsSmart404EnabledAction`
 - `ResolveSmart404SuggestionsAction`
 
 ### Data objects
@@ -140,6 +141,10 @@ Screenshot contract: `docs/screenshots.json`.
 1. Install the package: `composer require capell-app/smart-404`.
 2. Open the package admin surface at `/admin/extensions` and confirm Smart 404 is available.
 
+## Upgrading
+
+No manual steps between minor versions.
+
 ## Next Steps
 
 - [Package docs](docs/README.md)
@@ -148,6 +153,7 @@ Screenshot contract: `docs/screenshots.json`.
 - Configuration files: [`config/capell-smart-404.php`](config/capell-smart-404.php).
 - [Troubleshooting](#troubleshooting)
 - [Screenshot contract](docs/screenshots.json)
+- [Marketplace assets](docs/assets/marketplace/)
 - [Capell content language plan](../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../docs/erd/capell-and-package-erds.md)

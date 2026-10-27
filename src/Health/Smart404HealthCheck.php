@@ -41,6 +41,7 @@ final class Smart404HealthCheck implements ChecksExtensionHealth
                 ? (string) __('capell-smart-404::package.health.hook.passed')
                 : (string) __('capell-smart-404::package.health.hook.failed'),
             remediation: $passed ? null : (string) __('capell-smart-404::package.health.hook.remediation'),
+            id: 'legacy.smart.404.frontend.hook',
         )]);
     }
 
