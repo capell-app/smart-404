@@ -82,16 +82,18 @@
         "riskTier": "standard",
         "publicSurface": {
             "routeNames": [
-                "capell-smart-404.script",
-                "capell-smart-404.styles",
-                "capell-smart-404.suggestions"
+                "GET /smart-404/smart-404.css (capell-smart-404.styles)",
+                "GET /smart-404/smart-404.js (capell-smart-404.script)",
+                "GET /smart-404/suggestions (capell-smart-404.suggestions)"
             ],
             "auth": "public",
             "csrfExemptRoutes": [],
             "signedRoutes": [],
             "tokenizedRoutes": [],
             "webhookRoutes": [],
-            "throttledRoutes": ["capell-smart-404.suggestions"]
+            "throttledRoutes": [
+                "GET /smart-404/suggestions (capell-smart-404.suggestions)"
+            ]
         },
         "sensitiveData": {
             "encryptedFields": [],
@@ -145,6 +147,22 @@
     "marketplace": {
         "summary": "Helpful 404 suggestions from your site's public URL registry.",
         "description": "Smart 404 keeps the original 404 status while offering deterministic, site- and language-scoped links based on similar public URLs and nearby hierarchy. It uses no analytics, AI service, redirect, or authoring data in public HTML.",
+        "problem": "Visitors who follow a missing link on our site reach a dead end.",
+        "outcome": "Our missing-page responses offer visitors links to related public pages.",
+        "faq": [
+            {
+                "question": "Will missing pages still return a 404?",
+                "answer": "Frontend and static 404 documents retain their 404 status."
+            },
+            {
+                "question": "Do suggestions require JavaScript?",
+                "answer": "Similar links and nearby hierarchy are available with or without JavaScript."
+            },
+            {
+                "question": "Are unpublished pages included in suggestions?",
+                "answer": "Suggestions use public URLs and do not expose unpublished content."
+            }
+        ],
         "screenshots": [
             {
                 "path": "docs/screenshots/smart-404-missing-page-desktop.png",
@@ -167,5 +185,7 @@
         ],
         "categories": ["frontend", "search-seo"]
     },
-    "contributionTraceability": { "deferredContributions": [] }
+    "contributionTraceability": {
+        "deferredContributions": []
+    }
 }

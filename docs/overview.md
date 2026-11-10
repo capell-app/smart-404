@@ -2,105 +2,45 @@
 
 <!-- prettier-ignore-start -->
 
-## What This Plugin Adds
-
-Smart 404 is an **Available**, **No schema impact** Capell package in the **Capell Search & SEO** product group. It ships as `capell-app/smart-404` and extends these surfaces: admin, frontend, console.
+## What It Does
 
 Smart 404 turns missing-page dead ends into a short list of deterministic, site-scoped public URL suggestions.
 
 Frontend and static 404 documents keep their 404 status while similar links and nearby hierarchy are available with or without JavaScript.
 
-Status details:
+- **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
+- **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
+- **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.66`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`, `laravel/framework ^12.41.1|^13.0`, `lorisleiva/laravel-actions ^2.8`, `spatie/laravel-data ^4.5`, `spatie/laravel-package-tools ^1.14.1`.
+- **Install:** `composer require capell-app/smart-404`.
 
-- Status: Available
-- Tier: premium
-- Bundle: search-seo
-- Composer package: `capell-app/smart-404`
-- Namespace: `Capell\Smart404`
-- Theme key: not applicable
-
-## Why It Matters
+## Who It Is For
 
 **For developers:** The resolver uses the shared registry, a fixed similarity threshold, safe relative URLs, and a bounded public endpoint rather than application-specific queries in Blade.
 
 **For teams:** Visitors get useful next steps without redirects, visitor tracking, AI services, or exposing unpublished content.
 
+## Quick Start
+
+1. Install the package: `composer require capell-app/smart-404`.
+2. Open the package admin surface at `/admin/extensions` and confirm Smart 404 is available.
+
+## Configure
+
+- **Configuration files:** `config/capell-smart-404.php`.
+- **Admin settings:** `Capell\Smart404\Settings\Smart404Settings`.
+
+## Limits And Pitfalls
+
+- Install the required Capell packages at the versions in `composer.json`: `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.66`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`.
+- Review middleware, throttling, signatures, and public-output safety in `routes/web.php` before exposing routes.
+- Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
+- Custom write integrations must preserve invalidation for `smart-404` cache tags.
+
 ## Screens And Workflow
 
-Screenshot contract: `screenshots.json`.
-
-- Smart 404 suggestions on a missing public page (desktop) (frontend, required evidence).
-- Smart 404 suggestions on a missing public page (mobile) (frontend, required evidence).
-- Smart 404 settings (admin, required evidence).
-
-## Technical Shape
-
-### Service providers
-
-- `Capell\Smart404\Providers\Smart404ServiceProvider`
-- `Capell\Smart404\Providers\AdminServiceProvider`
-
-### Config files
-
-- `packages/smart-404/config/capell-smart-404.php`
-
-### Settings migrations
-
-- `packages/smart-404/database/settings/2026_08_08_000001_create_smart_404_settings.php`
-
-### Settings classes
-
-- `Smart404Settings`
-
-### Filament classes
-
-- `Smart404SettingsSchema`
-
-### Route files
-
-- `packages/smart-404/routes/web.php`
-
-### Actions
-
-- `InstallSmart404PackageAction`
-- `IsSmart404EnabledAction`
-- `ResolveSmart404SuggestionsAction`
-
-### Data objects
-
-- `Smart404PublicUrlEntryData`
-- `Smart404SuggestionData`
-
-### Manifest action API
-
-- `install: Capell\Smart404\Actions\InstallSmart404PackageAction`
-- `resolveSuggestions: Capell\Smart404\Actions\ResolveSmart404SuggestionsAction`
-
-### Manifest contributions
-
-- `frontend-component: Capell\Smart404\Manifest\Smart404WidgetContribution`
-- `health-check: Capell\Smart404\Manifest\Smart404HealthContribution`
-- `route: Capell\Smart404\Manifest\Smart404FrontendRoutesContribution`
-- `setting: Capell\Smart404\Manifest\Smart404SettingsContribution`
-
-### Health checks
-
-- `Capell\Smart404\Health\Smart404HealthCheck`
-
-### Blade views
-
-- `packages/smart-404/resources/views/widget.blade.php`
-
-### Cache tags
-
-- `smart-404`
-
-
-## Data Model
-
-- Required tables: `settings`, `pages`, `sites`.
-- Migration impact: run host migrations through the package install flow before opening package surfaces.
-- Deletion/retention behaviour: Docs gap: migrations and manifest contributions do not prove a cascade, pruning command, or timed retention policy.
+- Smart 404 suggestions on a missing public page (desktop) (frontend).
+- Smart 404 suggestions on a missing public page (mobile) (frontend).
+- Smart 404 settings (admin).
 
 ## Install Impact
 
@@ -116,14 +56,6 @@ Screenshot contract: `screenshots.json`.
 - Cache tags: `smart-404`.
 - Commands: none declared.
 
-## Common Pitfalls
-
-- Keep required Capell packages on compatible v4 releases: `capell-app/admin`, `capell-app/core`, `capell-app/discovery-foundation`, `capell-app/frontend`.
-- Review package configuration before production-like verification: `config/capell-smart-404.php`, `Capell\Smart404\Settings\Smart404Settings`.
-- Review middleware, throttling, signatures, and public-output safety in `routes/web.php` before exposing routes.
-- Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
-- Custom write integrations must preserve invalidation for `smart-404` cache tags.
-
 ## Troubleshooting
 
 | Symptom | Likely cause | Check | Fix |
@@ -132,22 +64,17 @@ Screenshot contract: `screenshots.json`.
 | Route returns unexpected output | Route cache, middleware, or signed URL setup does not match the package route file | Check the route files listed in `Technical Shape` | Clear route cache and verify middleware before exposing public routes |
 | Public output leaks unexpected state | Render data, cache variation, or authoring boundary has regressed | Check public Blade, cache tags, and public-output safety tests | Move data loading out of Blade and rerun the package public-output tests |
 
-## Quick Start
-
-1. Install the package: `composer require capell-app/smart-404`.
-2. Open the package admin surface at `/admin/extensions` and confirm Smart 404 is available.
-
 ## Next Steps
 
 - [Package docs index](README.md)
 - [Worked extension examples](extension-contracts.md)
 - Configuration files: [`config/capell-smart-404.php`](../config/capell-smart-404.php).
 - [Developer troubleshooting](../README.md#troubleshooting)
-- [Screenshot contract](screenshots.json)
+- [Developer reference](reference.md)
 - [Marketplace assets](assets/marketplace/)
 - [Capell content language plan](../../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../../docs/erd/capell-and-package-erds.md)
-- Related packages: [Discovery Foundation](../../discovery-foundation/README.md), [Site Discovery](../../site-discovery/README.md).
+- Related packages: [Discovery Core](../../discovery-foundation/README.md), [Site Discovery](../../site-discovery/README.md).
 
 <!-- prettier-ignore-end -->
