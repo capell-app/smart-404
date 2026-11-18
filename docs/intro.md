@@ -1,0 +1,5 @@
+Someone who types /pricng into your site lands on the not found page with Pricing suggested underneath. Smart 404 adds a short list of pages under the message, picked by how closely they match the address the visitor asked for. It compares the address, mostly its last part, with the names and addresses of your live public pages.
+
+In the admin, open Extensions and find Smart 404. A switch turns it on or off, and a number sets how many suggestions to show, from 1 to 10, starting at five. Anyone who can open the Extensions settings can change them. Suggestions come only from the same site and language, and always from pages search engines are allowed to list. On larger sites only the first 250 public addresses, in alphabetical order, are searched. The page keeps its not found status and visitors are not redirected.
+
+Each suggestion is a link using the page's label in the visitor's language, or its title if it has no label. If too few pages match, the list is filled up from the nearest parent page that does exist. A missing /services/old-thing offers Services and the pages beneath it.

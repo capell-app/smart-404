@@ -74,16 +74,19 @@ final class ResolveSmart404SuggestionsAction
                 return strcmp($leftEntry->title ?? '', $rightEntry->title ?? '');
             })
             ->unique(fn (array $candidate): string => (string) $candidate['url'])
-            ->take($this->maxCandidates())
             ->values();
 
         if ($registry->isEmpty()) {
             return collect();
         }
 
+        // Scoring is bounded, so the pool is the addresses most related to the missing one, never the first few
+        // alphabetically. The whole registry stays available for the hierarchy fallback below.
+        $pool = $this->scoringPool($registry, $requestedPath);
+
         $missingTitle = Str::headline(str_replace(['-', '_'], ' ', basename(trim($requestedPath, '/'))));
         $similarityThreshold = $this->configFloat('capell-smart-404.minimum_similarity', 0.55);
-        $scored = $registry
+        $scored = $pool
             ->map(function (array $candidate) use ($requestedPath, $missingTitle): array {
                 /** @var Smart404PublicUrlEntryData $entry */
                 $entry = $candidate['entry'];
@@ -144,6 +147,59 @@ final class ResolveSmart404SuggestionsAction
             title: $navigationLabels[$suggestion->url] ?? $suggestion->title,
             url: $suggestion->url,
         ));
+    }
+
+    /**
+     * The candidates worth scoring: those sharing the most address and title words, and the longest leading path,
+     * with the missing address. Ties keep the registry's alphabetical order, so the result is deterministic.
+     *
+     * @param  Collection<int, array{entry: Smart404PublicUrlEntryData, url: string}>  $registry
+     * @return Collection<int, array{entry: Smart404PublicUrlEntryData, url: string}>
+     */
+    private function scoringPool(Collection $registry, string $requestedPath): Collection
+    {
+        $limit = $this->maxCandidates();
+
+        if ($registry->count() <= $limit) {
+            return $registry;
+        }
+
+        $wanted = $this->words($requestedPath);
+        $wantedSegments = array_values(array_filter(explode('/', trim($requestedPath, '/')), static fn (string $segment): bool => $segment !== ''));
+
+        return $registry
+            ->map(function (array $candidate) use ($wanted, $wantedSegments): array {
+                $url = (string) $candidate['url'];
+                $words = $this->words($url . ' ' . $candidate['entry']->title);
+                $segments = array_values(array_filter(explode('/', trim($url, '/')), static fn (string $segment): bool => $segment !== ''));
+                $sharedPrefix = 0;
+
+                foreach ($segments as $index => $segment) {
+                    if (($wantedSegments[$index] ?? null) !== $segment) {
+                        break;
+                    }
+
+                    $sharedPrefix++;
+                }
+
+                $relevance = (count(array_intersect($wanted, $words)) * 2) + $sharedPrefix;
+
+                return [...$candidate, 'relevance' => $relevance];
+            })
+            ->sortByDesc('relevance')
+            ->take($limit)
+            ->map(static fn (array $candidate): array => ['entry' => $candidate['entry'], 'url' => $candidate['url']])
+            ->values();
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function words(string $value): array
+    {
+        $words = preg_split('/[^\p{L}\p{N}]+/u', mb_strtolower($this->boundMatchInput($value)), -1, PREG_SPLIT_NO_EMPTY);
+
+        return $words === false ? [] : array_values(array_unique($words));
     }
 
     /**

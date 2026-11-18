@@ -11,14 +11,25 @@
     aria-labelledby="capell-smart-404-heading"
     data-endpoint="{{ route('capell-smart-404.suggestions', [], false) }}"
     data-path="{{ request()->getPathInfo() }}"
+    data-timeout="{{ $timeoutMs ?? 2000 }}"
     @if (! $hasSuggestions) hidden @endif
 >
-    <h2 id="capell-smart-404-heading">{{ __('capell-smart-404::generic.heading') }}</h2>
+    <h2 id="capell-smart-404-heading">
+        {{ __('capell-smart-404::generic.heading') }}
+    </h2>
     <ul class="capell-smart-404__list">
         @foreach ($suggestions as $suggestion)
-            <li><a href="{{ $suggestion->url }}">{{ $suggestion->title }}</a></li>
+            <li>
+                <a href="{{ $suggestion->url }}">{{ $suggestion->title }}</a>
+            </li>
         @endforeach
     </ul>
 </section>
-<link rel="stylesheet" href="{{ route('capell-smart-404.styles', [], false) }}">
-<script src="{{ route('capell-smart-404.script', [], false) }}" defer></script>
+<link
+    rel="stylesheet"
+    href="{{ route('capell-smart-404.styles', [], false) }}"
+/>
+<script
+    src="{{ route('capell-smart-404.script', [], false) }}"
+    defer
+></script>

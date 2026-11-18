@@ -5,10 +5,10 @@
         "default": {
             "source": {
                 "ref": "HEAD",
-                "commit": "adac26b4ce1e9e1de545f68a1ff272ff73111696",
+                "commit": "4e8eaae89410b50df5f6c1be224c53ba707be7b9",
                 "providers": {
                     "Providers/AdminServiceProvider.php": "5b68677b742b975f264848276fa142c92b00a99033b2c59fd5c1266625ff68fd",
-                    "Providers/Smart404ServiceProvider.php": "80d9fb28f66a15615abfa03378d6abfda3b10d56ced0d3aa8781b6f5e9d6b205"
+                    "Providers/Smart404ServiceProvider.php": "28dceac11333b9a637c3cd5d37ef20ed09698ec309775983729ad0ab70eaa256"
                 },
                 "configure": null
             },
@@ -18,7 +18,6 @@
                     "capell-smart-404.php": {
                         "client_timeout_ms": 2000,
                         "enabled": true,
-                        "endpoint_path": "<path>",
                         "max_candidates": 250,
                         "max_suggestions": 5,
                         "minimum_similarity": 0.55,
@@ -29,7 +28,6 @@
                     "capell-smart-404",
                     "capell-smart-404.client_timeout_ms",
                     "capell-smart-404.enabled",
-                    "capell-smart-404.endpoint_path",
                     "capell-smart-404.max_candidates",
                     "capell-smart-404.max_suggestions",
                     "capell-smart-404.minimum_similarity",
@@ -168,7 +166,7 @@
                                     "group": "smart_404",
                                     "icon": "o-exclamation-triangle",
                                     "label": "capell-smart-404::settings.title",
-                                    "navigationGroup": "capell-admin::navigation.group_system",
+                                    "navigationGroup": "settings",
                                     "navigationSort": 96,
                                     "packageName": "capell-app/smart-404"
                                 }
@@ -263,7 +261,6 @@
                     "capell-smart-404.php": {
                         "client_timeout_ms": 2000,
                         "enabled": true,
-                        "endpoint_path": "<path>",
                         "max_candidates": 250,
                         "max_suggestions": 5,
                         "minimum_similarity": 0.55,
@@ -274,7 +271,6 @@
                     "capell-smart-404",
                     "capell-smart-404.client_timeout_ms",
                     "capell-smart-404.enabled",
-                    "capell-smart-404.endpoint_path",
                     "capell-smart-404.max_candidates",
                     "capell-smart-404.max_suggestions",
                     "capell-smart-404.minimum_similarity",
@@ -291,7 +287,33 @@
                     "capell-smart-404": ["<package>/resources/views"]
                 }
             },
-            "removableUninstalledSurfaces": []
+            "removableUninstalledSurfaces": [],
+            "installationReceiptEmissions": [
+                [
+                    "admin-page",
+                    "extension-management-surface:capell-app/smart-404:settings:smart_404",
+                    "Capell\\Admin\\Data\\Extensions\\ExtensionManagementSurfaceData",
+                    "Capell\\Admin\\Support\\CapellAdminManager",
+                    "admin",
+                    "context"
+                ],
+                [
+                    "render-hook",
+                    "smart-404-widget",
+                    "Capell\\Smart404\\Support\\RenderHooks\\RegisterSmart404Hook",
+                    "Capell\\Frontend\\Support\\Render\\RenderHookRegistry",
+                    "frontend",
+                    "context"
+                ],
+                [
+                    "render-hook",
+                    "smart-404-widget",
+                    "Capell\\Smart404\\Support\\RenderHooks\\RegisterSmart404Hook",
+                    "Capell\\Frontend\\Support\\Render\\FrontendHookRegistrar",
+                    null,
+                    "context"
+                ]
+            ]
         }
     }
 }

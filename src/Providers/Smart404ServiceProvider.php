@@ -130,7 +130,7 @@ final class Smart404ServiceProvider extends AbstractPackageServiceProvider
             group: Smart404Settings::group(),
             label: 'capell-smart-404::settings.title',
             icon: Heroicon::OutlinedExclamationTriangle,
-            navigationGroup: 'capell-admin::navigation.group_system',
+            navigationGroup: 'settings',
             navigationSort: 96,
             packageName: self::$packageName,
         ));

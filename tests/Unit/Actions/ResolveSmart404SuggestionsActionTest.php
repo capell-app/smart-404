@@ -74,3 +74,27 @@ it('returns the deepest ancestor and direct children when no similarity qualifie
 
     expect($suggestions->pluck('url')->all())->toBe(['/catalog', '/catalog/contact', '/catalog/featured']);
 });
+
+it('scores the addresses most related to the missing one when the registry is larger than the candidate limit', function (): void {
+    config(['capell-smart-404.max_candidates' => 3]);
+    $entries = collect(range(1, 12))
+        ->map(fn (int $number): PublicUrlRegistryEntryData => smart404Entry('/a-filler-' . $number, 'Filler ' . $number))
+        ->push(smart404Entry('/catalog/missing-page', 'Missing page'));
+
+    $suggestions = ResolveSmart404SuggestionsAction::run('/catalog/missing', $this->site, $this->language, $entries);
+
+    expect($suggestions->pluck('url')->all())->toContain('/catalog/missing-page');
+});
+
+it('keeps hierarchy fallbacks available beyond the scored candidate pool', function (): void {
+    config(['capell-smart-404.max_candidates' => 1, 'capell-smart-404.minimum_similarity' => 1.0]);
+    $entries = collect([
+        smart404Entry('/catalog', 'Catalog'),
+        smart404Entry('/catalog/featured', 'Featured'),
+        smart404Entry('/zzz', 'Zzz'),
+    ]);
+
+    $suggestions = ResolveSmart404SuggestionsAction::run('/catalog/missing', $this->site, $this->language, $entries);
+
+    expect($suggestions->pluck('url')->all())->toContain('/catalog', '/catalog/featured');
+});

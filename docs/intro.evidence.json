@@ -1,0 +1,75 @@
+[
+    {
+        "claim": "Someone who types /pricng into your site lands on the not found page with Pricing suggested underneath.",
+        "evidence": [
+            "src/Actions/ResolveSmart404SuggestionsAction.php",
+            "config/capell-smart-404.php",
+            "src/Support/RenderHooks/RegisterSmart404Hook.php"
+        ]
+    },
+    {
+        "claim": "Smart 404 adds a short list of pages under the message, picked by how closely they match the address the visitor asked for.",
+        "evidence": [
+            "src/Support/RenderHooks/RegisterSmart404Hook.php",
+            "resources/views/widget.blade.php",
+            "src/Actions/ResolveSmart404SuggestionsAction.php"
+        ]
+    },
+    {
+        "claim": "It compares the address, mostly its last part, with the names and addresses of your live public pages.",
+        "evidence": [
+            "src/Actions/ResolveSmart404SuggestionsAction.php",
+            "src/Bridges/SiteDiscovery/Smart404PublicUrlRegistryAdapter.php"
+        ]
+    },
+    {
+        "claim": "In the admin, open Extensions and find Smart 404; a switch turns it on or off, and a number sets how many suggestions to show, from 1 to 10, starting at five.",
+        "evidence": [
+            "src/Manifest/Smart404SettingsContribution.php",
+            "src/Filament/Settings/Smart404SettingsSchema.php",
+            "database/settings/2026_08_08_000001_create_smart_404_settings.php",
+            "src/Actions/ResolveSmart404SuggestionsAction.php"
+        ]
+    },
+    {
+        "claim": "Anyone who can open the Extensions settings can change them.",
+        "evidence": [
+            "src/Manifest/Smart404SettingsContribution.php",
+            "capell.json"
+        ]
+    },
+    {
+        "claim": "Suggestions come only from the same site and language, and always from pages search engines are allowed to list.",
+        "evidence": [
+            "src/Actions/ResolveSmart404SuggestionsAction.php",
+            "src/Providers/Smart404ServiceProvider.php",
+            "src/Http/Controllers/Smart404SuggestionsController.php"
+        ]
+    },
+    {
+        "claim": "On larger sites only the first 250 public addresses, in alphabetical order, are searched.",
+        "evidence": [
+            "config/capell-smart-404.php",
+            "src/Actions/ResolveSmart404SuggestionsAction.php"
+        ]
+    },
+    {
+        "claim": "The page keeps its not found status and visitors are not redirected.",
+        "evidence": [
+            "src/Support/RenderHooks/RegisterSmart404Hook.php",
+            "src/Providers/Smart404ServiceProvider.php",
+            "resources/dist/smart-404.js"
+        ]
+    },
+    {
+        "claim": "Each suggestion is a link using the page's label in the visitor's language, or its title if it has no label.",
+        "evidence": [
+            "src/Actions/ResolveSmart404SuggestionsAction.php",
+            "resources/views/widget.blade.php"
+        ]
+    },
+    {
+        "claim": "If too few pages match, the list is filled up from the nearest parent page that does exist; a missing /services/old-thing offers Services and the pages beneath it.",
+        "evidence": ["src/Actions/ResolveSmart404SuggestionsAction.php"]
+    }
+]

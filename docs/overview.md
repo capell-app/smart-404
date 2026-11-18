@@ -2,27 +2,25 @@
 
 <!-- prettier-ignore-start -->
 
-## What It Does
+Someone who types /pricng into your site lands on the not found page with Pricing suggested underneath. Smart 404 adds a short list of pages under the message, picked by how closely they match the address the visitor asked for. It compares the address, mostly its last part, with the names and addresses of your live public pages.
 
-Smart 404 turns missing-page dead ends into a short list of deterministic, site-scoped public URL suggestions.
+In the admin, open Extensions and find Smart 404. A switch turns it on or off, and a number sets how many suggestions to show, from 1 to 10, starting at five. Anyone who can open the Extensions settings can change them. Suggestions come only from the same site and language, and always from pages search engines are allowed to list. On larger sites only the first 250 public addresses, in alphabetical order, are searched. The page keeps its not found status and visitors are not redirected.
 
-Frontend and static 404 documents keep their 404 status while similar links and nearby hierarchy are available with or without JavaScript.
+Each suggestion is a link using the page's label in the visitor's language, or its title if it has no label. If too few pages match, the list is filled up from the nearest parent page that does exist. A missing /services/old-thing offers Services and the pages beneath it.
 
 - **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
 - **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
 - **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.66`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`, `laravel/framework ^12.41.1|^13.0`, `lorisleiva/laravel-actions ^2.8`, `spatie/laravel-data ^4.5`, `spatie/laravel-package-tools ^1.14.1`.
 - **Install:** `composer require capell-app/smart-404`.
 
-## Who It Is For
-
-**For developers:** The resolver uses the shared registry, a fixed similarity threshold, safe relative URLs, and a bounded public endpoint rather than application-specific queries in Blade.
-
-**For teams:** Visitors get useful next steps without redirects, visitor tracking, AI services, or exposing unpublished content.
-
 ## Quick Start
 
 1. Install the package: `composer require capell-app/smart-404`.
 2. Open the package admin surface at `/admin/extensions` and confirm Smart 404 is available.
+
+## For Developers
+
+The resolver uses the shared registry, a fixed similarity threshold, safe relative URLs, and a bounded public endpoint rather than application-specific queries in Blade.
 
 ## Configure
 
@@ -75,6 +73,6 @@ Frontend and static 404 documents keep their 404 status while similar links and 
 - [Capell content language plan](../../../docs/CONTENT_LANGUAGE_PLAN.md)
 - [Capell documentation design system](../../../docs/DESIGN_SYSTEM.md)
 - [Capell and package ERD notes](../../../docs/erd/capell-and-package-erds.md)
-- Related packages: [Discovery Core](../../discovery-foundation/README.md), [Site Discovery](../../site-discovery/README.md).
+- Related packages: [Discovery Foundation](../../discovery-foundation/README.md), [Site Discovery](../../site-discovery/README.md).
 
 <!-- prettier-ignore-end -->

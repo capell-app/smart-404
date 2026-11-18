@@ -236,6 +236,7 @@ it('declares a bounded public rate limit and preserves an error response status 
     expect($response->getStatusCode())->toBe(Response::HTTP_NOT_FOUND)
         ->and($output)
         ->toContain('data-endpoint="/smart-404/suggestions"')
+        ->toContain('data-timeout="2000"')
         ->toContain(route('capell-smart-404.script', [], false))
         ->toContain(route('capell-smart-404.styles', [], false))
         ->not->toContain('capell-app/smart-404')

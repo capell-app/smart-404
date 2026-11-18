@@ -1,6 +1,6 @@
 {
     "name": "capell-app/smart-404",
-    "description": "Privacy-safe, deterministic 404 suggestions for Capell sites.",
+    "description": "Suggest close-matching live pages on the Capell not found page, within the same site and language.",
     "type": "library",
     "license": "proprietary",
     "require": {

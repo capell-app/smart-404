@@ -9,12 +9,17 @@
     var path = window.location.pathname
     if (!list || !endpoint || !window.fetch) return
 
+    // The server already resolved suggestions for this address: keep them rather than resolving a second time.
+    if (list.children.length > 0) return
+
+    var timeoutMs = parseInt(shell.getAttribute('data-timeout'), 10)
+    if (!(timeoutMs > 0)) timeoutMs = 2000
+
     var controller =
         typeof AbortController === 'function' ? new AbortController() : null
     var timeout = window.setTimeout(function () {
         if (controller) controller.abort()
-        shell.hidden = true
-    }, 2000)
+    }, timeoutMs)
 
     window
         .fetch(endpoint + '?path=' + encodeURIComponent(path), {
@@ -50,7 +55,7 @@
             shell.hidden = suggestions.length === 0
         })
         .catch(function () {
+            // A failed or slow request leaves whatever the page already shows.
             window.clearTimeout(timeout)
-            shell.hidden = true
         })
 })()

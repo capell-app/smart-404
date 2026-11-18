@@ -6,7 +6,7 @@
     "kind": "package",
     "capellApiVersion": "^1.0",
     "version": "1.0.0",
-    "description": "Turn dead ends into useful next steps with deterministic, privacy-safe suggestions from the current site's public URL registry.",
+    "description": "Adds a short list of close-matching pages to your not found page, chosen from live public pages in the same site and language.",
     "product": {
         "group": "Capell Search & SEO",
         "tier": "premium",
@@ -77,7 +77,7 @@
     },
     "settings": ["Capell\\Smart404\\Settings\\Smart404Settings"],
     "permissions": [],
-    "capabilities": ["smart-404", "smart-404-public-rate-limit"],
+    "capabilities": ["frontend-surface"],
     "security": {
         "riskTier": "standard",
         "publicSurface": {
@@ -145,47 +145,63 @@
         "privateDocsRequested": true
     },
     "marketplace": {
-        "summary": "Helpful 404 suggestions from your site's public URL registry.",
-        "description": "Smart 404 keeps the original 404 status while offering deterministic, site- and language-scoped links based on similar public URLs and nearby hierarchy. It uses no analytics, AI service, redirect, or authoring data in public HTML.",
-        "problem": "Visitors who follow a missing link on our site reach a dead end.",
-        "outcome": "Our missing-page responses offer visitors links to related public pages.",
+        "summary": "Offers visitors on a not found page up to ten likely pages, matched to the address they asked for, with an on and off switch.",
+        "description": "A visitor who mistypes /pricng still reaches the not found page, with Pricing offered as the likely page. Smart 404 lists pages that closely match the missing address. If too few match, it adds the nearest existing parent and the pages beneath it. Suggestions stay within the current site and language, and the page keeps its not found status. Set the number of links from 1 to 10 in the admin.",
+        "problem": "Visitors who follow a missing link reach a dead end.",
+        "outcome": "Visitors on a not found page see links to the nearest live pages.",
         "faq": [
             {
-                "question": "Will missing pages still return a 404?",
-                "answer": "Frontend and static 404 documents retain their 404 status."
+                "question": "Does a missing page still show as not found?",
+                "answer": "Yes. The page keeps its not found status and visitors are not redirected. Suggestions only appear under the message."
             },
             {
-                "question": "Do suggestions require JavaScript?",
-                "answer": "Similar links and nearby hierarchy are available with or without JavaScript."
+                "question": "How many suggestions can I show?",
+                "answer": "From 1 to 10, starting at five. Open Extensions in the admin and find Smart 404, where a switch turns it on or off and a number sets how many to show."
             },
             {
-                "question": "Are unpublished pages included in suggestions?",
-                "answer": "Suggestions use public URLs and do not expose unpublished content."
+                "question": "Could it suggest a draft or hidden page?",
+                "answer": "No. Suggestions come only from the same site and language, and always from live public pages that search engines are allowed to list."
+            },
+            {
+                "question": "Does it work on a large site?",
+                "answer": "Yes, with a limit. On larger sites only the first 250 public addresses, in alphabetical order, are searched."
             }
         ],
         "screenshots": [
             {
                 "path": "docs/screenshots/smart-404-missing-page-desktop.png",
-                "alt": "Smart 404 suggestions on an anonymous missing page at desktop width",
-                "caption": "Privacy-safe next steps while preserving the original HTTP 404 response",
+                "alt": "Page not found screen at desktop width with a search box and links to Homepage, Quick start and Browse extensions",
+                "caption": "The not found page a visitor sees, here without a suggestions list.",
                 "required": true
             },
             {
                 "path": "docs/screenshots/smart-404-missing-page-mobile.png",
-                "alt": "Smart 404 suggestions on an anonymous missing page at mobile width",
-                "caption": "Responsive missing-page suggestions for mobile visitors",
+                "alt": "Page not found screen at phone width with a search box, four links and a diagram below",
+                "caption": "The same not found page on a phone, laid out for a narrow screen.",
                 "required": true
             },
             {
                 "path": "docs/screenshots/smart-404-settings.png",
-                "alt": "Smart 404 settings modal in the authenticated Extensions admin",
-                "caption": "Enable Smart 404 and choose the maximum number of suggestions",
+                "alt": "Smart 404 settings panel with an Enable switch turned on and a Maximum suggestions field set to 5",
+                "caption": "Turn suggestions on or off and set how many to show.",
                 "required": true
             }
         ],
         "categories": ["frontend", "search-seo"]
     },
     "contributionTraceability": {
-        "deferredContributions": []
+        "deferredContributions": [],
+        "contributions": [
+            {
+                "type": "admin-page",
+                "key": "extension-management-surface:capell-app/smart-404:settings:smart_404",
+                "providerBucket": "admin"
+            },
+            {
+                "type": "render-hook",
+                "key": "smart-404-widget",
+                "providerBucket": "runtime"
+            }
+        ]
     }
 }

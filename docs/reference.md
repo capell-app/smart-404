@@ -6,10 +6,10 @@ Developer reference for `capell-app/smart-404`. Start with the [README](../READM
 
 ## Package Details
 
-Smart 404 is an **Available**, **No schema impact** Capell package in the **Capell Search & SEO** product group. It ships as `capell-app/smart-404` and extends these surfaces: admin, frontend, console.
+Smart 404 is an **Available** Capell package in the **Capell Search & SEO** product group. It ships as `capell-app/smart-404` and extends these surfaces: admin, frontend, console.
 
 - Status: Available
-- Tier: premium
+- Tier: paid
 - Bundle: search-seo
 - Composer package: `capell-app/smart-404`
 - Namespace: `Capell\Smart404`
