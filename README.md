@@ -8,9 +8,9 @@ In the admin, open Extensions and find Smart 404. A switch turns it on or off, a
 
 Each suggestion is a link using the page's label in the visitor's language, or its title if it has no label. If too few pages match, the list is filled up from the nearest parent page that does exist. A missing /services/old-thing offers Services and the pages beneath it.
 
-- **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
-- **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/extensions/smart-404).
-- **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.66`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`, `laravel/framework ^12.41.1|^13.0`, `lorisleiva/laravel-actions ^2.8`, `spatie/laravel-data ^4.5`, `spatie/laravel-package-tools ^1.14.1`.
+- **Price and availability:** Check current availability and price on the [Capell Marketplace listing](https://capell.app/marketplace/extensions/smart-404).
+- **Licence:** Check the licence terms on the [Capell Marketplace listing](https://capell.app/marketplace/extensions/smart-404).
+- **Requires:** `PHP ^8.4`, `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.79`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`, `laravel/framework ^12.41.1|^13.0`, `lorisleiva/laravel-actions ^2.8`, `spatie/laravel-data ^4.5`, `spatie/laravel-package-tools ^1.14.1`.
 - **Install:** `composer require capell-app/smart-404`.
 
 ## Quick Start
@@ -29,7 +29,7 @@ The resolver uses the shared registry, a fixed similarity threshold, safe relati
 
 ## Limits And Pitfalls
 
-- Install the required Capell packages at the versions in `composer.json`: `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.66`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`.
+- Install the required Capell packages at the versions in `composer.json`: `capell-app/admin ^1.0.66`, `capell-app/core ^1.0.79`, `capell-app/discovery-foundation ^1.0`, `capell-app/frontend ^1.0.72`.
 - Review middleware, throttling, signatures, and public-output safety in `routes/web.php` before exposing routes.
 - Keep public Blade and cached HTML free of authoring markers, model IDs, permissions, signed editor URLs, and lazy database queries.
 - Custom write integrations must preserve invalidation for `smart-404` cache tags.

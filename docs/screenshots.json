@@ -1,7 +1,8 @@
 {
     "package": "smart-404",
     "composerName": "capell-app/smart-404",
-    "generatedFor": "deployment-screenshot-runner",
+    "generatedFor": "shared-capell-screenshot-runner",
+    "provenancePolicy": "runner-only-v1",
     "requiresInstalledPackage": true,
     "outputDirectory": "packages/smart-404/docs/screenshots",
     "entries": [
