@@ -6,6 +6,7 @@
     "kind": "package",
     "capellApiVersion": "^1.0",
     "version": "1.0.0",
+    "launchStatus": "preview",
     "description": "Adds a short list of close-matching pages to your not found page, chosen from live public pages in the same site and language.",
     "product": {
         "group": "Capell Search & SEO",
